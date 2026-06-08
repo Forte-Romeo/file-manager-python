@@ -1,8 +1,8 @@
-# 📁 Simple File Manager Script
+# 📁 Advanced Python File Manager
 
-A beginner-friendly command-line File Manager built with Python.
+A command-line File Manager built with Python that allows users to create, organize, edit, copy, move, and manage files directly from the terminal.
 
-This project allows users to create, read, edit, delete, rename, and manage files directly from the terminal. It demonstrates core Python concepts such as Object-Oriented Programming (OOP), file handling, loops, functions, and working with the operating system through the `os` module.
+This project was developed to practice Python fundamentals while simulating real-world file system operations. It combines Object-Oriented Programming (OOP), file handling, loops, functions, and operating system interactions into a single practical application.
 
 ---
 
@@ -16,20 +16,22 @@ This project allows users to create, read, edit, delete, rename, and manage file
 * Delete files
 * Rename files
 
-### File Management
+### File Organization
 
-* View all files in the storage folder
+* View all files
 * Search for files
 * Display file information
-* Count words inside a file
+* Count words in files
 
-### Additional Features
+### Advanced Features
 
-* Automatic creation of storage folder
+* Multi-line text editor
+* Copy files
+* Move files between folders
+* Automatic folder creation
 * Input validation
-* User-friendly menu system
-* Error handling for missing files
-* Continuous CLI interaction until exit
+* Error handling
+* Persistent file storage
 
 ---
 
@@ -39,6 +41,7 @@ This project allows users to create, read, edit, delete, rename, and manage file
 * Object-Oriented Programming (OOP)
 * File Handling
 * OS Module
+* Shutil Module
 
 ---
 
@@ -47,19 +50,25 @@ This project allows users to create, read, edit, delete, rename, and manage file
 ```text
 file-manager-python/
 │
-├── main.py
+├── file-manager.py
 │
-└── files/
-    ├── notes.txt
-    ├── tasks.txt
-    └── ...
+├── files/
+│   ├── notes.txt
+│   ├── report.txt
+│   └── ...
+│
+├── documents/
+│
+└── backups/
 ```
 
-The `files` directory is automatically created when the application runs for the first time.
+The `files` folder is automatically created when the program runs for the first time.
+
+Additional folders are automatically generated whenever a file is moved to a destination that does not already exist.
 
 ---
 
-## 📋 Menu Options
+## 📋 Application Menu
 
 ```text
 ===================================
@@ -75,32 +84,34 @@ The `files` directory is automatically created when the application runs for the
 7. Search File
 8. File Information
 9. Word Count
-10. Exit
+10. Copy File
+11. Move File
+12. Exit
 ```
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Clone the Repository
+#### Clone the Repository
 
 ```bash
 git clone https://github.com/Forte-Romeo/file-manager-python.git
 ```
 
-### 2. Navigate to the Project Folder
+#### Navigate into the Project Folder
 
 ```bash
 cd file-manager-python
 ```
 
-### 3. Run the Application
+#### Run the Application
 
 ```bash
 python file-manager.py
 ```
 
-Or:
+or
 
 ```bash
 python3 file-manager.py
@@ -112,19 +123,29 @@ python3 file-manager.py
 
 ### 1. Create File
 
-Creates a new file inside the storage folder.
+Creates a new file in the storage directory.
 
-Example:
+#### Example
 
 ```text
 Filename: notes.txt
-Content: My first file
+```
+
+The program then launches the multi-line editor.
+
+```text
+Enter text below.
+Type 'SAVE' on a new line when finished.
+
+My first note
+Learning Python
+SAVE
 ```
 
 Result:
 
 ```text
-notes.txt created successfully.
+File created successfully.
 ```
 
 ---
@@ -133,58 +154,70 @@ notes.txt created successfully.
 
 Displays the contents of an existing file.
 
-Example:
+#### Example
 
 ```text
-Milk
-Bread
-Eggs
+My first note
+Learning Python
 ```
 
 ---
 
 ### 3. Edit File
 
-Overwrites the contents of an existing file with new content.
+Allows the user to overwrite the contents of an existing file using the multi-line editor.
+
+#### Example
+
+```text
+Enter text below.
+Type 'SAVE' on a new line when finished.
+
+Updated content
+More information
+SAVE
+```
 
 ---
 
 ### 4. Delete File
 
-Removes a file permanently after user confirmation.
+Permanently removes a selected file after confirmation.
 
-Example:
+#### Example
 
 ```text
-Are you sure? (y/n)
+Are you sure you want to delete 'notes.txt'? (y/n)
 ```
 
 ---
 
 ### 5. Rename File
 
-Changes a file's name while preserving its contents.
+Changes the name of an existing file.
 
-Example:
+#### Example
 
 ```text
-old_name.txt
-→
-new_name.txt
+Current filename:
+notes.txt
+
+New filename:
+python_notes.txt
 ```
 
 ---
 
 ### 6. View All Files
 
-Displays every file stored in the application folder.
+Lists every file stored inside the application directory.
 
-Example:
+#### Example
 
 ```text
 1. notes.txt
-2. tasks.txt
-3. shopping.txt
+2. report.txt
+3. tasks.txt
 ```
 
 ---
@@ -193,93 +226,211 @@ Example:
 
 Checks whether a file exists.
 
-Example:
+#### Example
+
+```text
+Enter filename:
+notes.txt
+```
+
+Output:
 
 ```text
 File exists.
-```
-
-or
-
-```text
-File not found.
 ```
 
 ---
 
 ### 8. File Information
 
-Displays information about a selected file.
+Displays file metadata.
 
-Example:
+#### Example
 
 ```text
 Filename: notes.txt
-Size: 1024 bytes
+Size: 2048 bytes
 ```
 
 ---
 
-## 9. Word Count
+### 9. Word Count
 
-Counts the total number of words in a file.
+Calculates the number of words in a file.
 
-Example:
+#### Example
 
 ```text
-Total words: 156
+Total words: 125
 ```
 
 ---
 
-## 🎯 Python Concepts Demonstrated
+### 10. Copy File
 
-This project applies several fundamental Python concepts:
+Creates a duplicate of an existing file.
 
-| Concept       | Usage                                    |
+### Example
+
+```text
+File to copy:
+notes.txt
+
+New file name:
+notes_backup.txt
+```
+
+Result:
+
+```text
+notes.txt
+notes_backup.txt
+```
+
+Both files contain identical content.
+
+---
+
+### 11. Move File
+
+Moves a file from the main storage folder to another directory.
+
+#### Example
+
+```text
+Filename:
+report.txt
+
+Destination folder:
+documents
+```
+
+Result:
+
+```text
+documents/report.txt
+```
+
+If the destination folder does not exist, it is automatically created.
+
+---
+
+## ✍️ Multi-Line Text Editor
+
+The application includes a built-in text editor for creating and editing files.
+
+Users can enter multiple lines of text and save when finished.
+
+### Example
+
+```text
+Enter text below.
+Type 'SAVE' on a new line when finished.
+
+This is line one.
+This is line two.
+This is line three.
+SAVE
+```
+
+The content is then written to the selected file.
+
+---
+
+## 📚 Python Concepts Demonstrated
+
+| Concept       | Application                              |
 | ------------- | ---------------------------------------- |
-| Variables     | Store user input and file data           |
-| Functions     | Organize file operations                 |
-| Loops         | Keep application running                 |
-| Conditionals  | Menu navigation and validation           |
-| Lists         | Display file collections                 |
-| File Handling | Create, read, update, and delete files   |
-| OOP           | Encapsulate functionality inside a class |
-| OS Module     | Manage files and directories             |
+| Variables     | User input and data storage              |
+| Functions     | File operation methods                   |
+| Loops         | Menu navigation and editor functionality |
+| Conditionals  | Input validation and error handling      |
+| Lists         | File listing and text storage            |
+| Strings       | Content processing                       |
+| Classes       | Application structure                    |
+| OOP           | Encapsulation of file operations         |
+| File Handling | Create, read, update, delete files       |
+| OS Module     | File and directory management            |
+| Shutil Module | Copying and moving files                 |
 
 ---
 
-## 📚 Learning Outcomes
+## 🎯 Learning Objectives
 
-By building this project, you will gain experience with:
+This project helps developers gain practical experience with:
 
-* Designing command-line applications
-* Structuring code using classes
-* Managing files and directories
-* Working with user input
-* Error handling
-* Building CRUD-based applications
-* Organizing Python projects
+* Command-Line Application Development
+* Object-Oriented Programming
+* File System Management
+* Error Handling
+* Data Processing
+* User Interaction Design
+* Software Project Structure
 
 ---
 
-## 🔮 Future Improvements
+## 📈 Skills Demonstrated
 
-Possible enhancements include:
+This project demonstrates understanding of:
 
-* Multi-line text editor
-* File copy functionality
-* Move files between folders
-* File extension filtering
+### Beginner Level
+
+* Variables
+* Input/Output
+* Loops
+* Functions
+* Lists
+* Dictionaries
+
+### Intermediate Level
+
+* Classes and Objects
+* File Handling
+* Directory Management
+* Program Organization
+* User Experience Design
+
+### Real-World Concepts
+
+* CRUD Operations
+* File Management Systems
+* Folder Organization
+* Backup Management
+* Data Persistence
+
+---
+
+## 🔮 Future Enhancements
+
+Potential improvements include:
+
+### File Management
+
 * Sort files alphabetically
 * Sort files by size
-* Recently modified files view
-* Colored terminal output
-* Advanced CLI menus using Questionary
+* Recently modified files
+* File extension filtering
+* File compression
+
+### User Experience
+
+* Colored terminal interface
+* Progress indicators
+* Better menu navigation
+
+### Advanced Features
+
 * Activity logs
+* Recycle bin system
 * Password-protected files
+* File encryption
 * SQLite database integration
-* GUI version using Tkinter or CustomTkinter
+
+### GUI Version
+
+* Tkinter Interface
+* CustomTkinter Interface
+* PyQt Desktop Application
 
 ---
 
@@ -287,6 +438,20 @@ Possible enhancements include:
 
 Built by Ferguson Romeo (Forte Romeo)  
 Software + AI Engineer | IT Student | Builder in Progress 🚀
+
+Developed as a Python learning project to strengthen skills in:
+
+* Python Fundamentals
+* File Handling
+* Object-Oriented Programming
+* Command-Line Interfaces
+* Operating System Interactions
+
+---
+
+## 📄 License
+
+This project is open-source and available for educational and personal use.
 
 ---
 
