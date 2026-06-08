@@ -1,5 +1,5 @@
 import os
-
+import shutil
 
 class FileManager:
     def __init__(self):
@@ -20,12 +20,28 @@ class FileManager:
             print("❌ File already exists.")
             return
 
-        content = input("Enter content: ")
+        content = self.multiline_input()
 
         with open(filepath, "w") as file:
             file.write(content)
 
         print("✅ File created successfully.")
+
+    def multiline_input(self):
+        print("\nEnter text below.")
+        print("Type 'SAVE' on a new line when finished.\n")
+
+        lines = []
+
+        while True:
+            line = input()
+
+            if line.upper() == "SAVE":
+                break
+
+            lines.append(line)
+
+        return "\n".join(lines)
 
     def read_file(self):
         filename = input("Enter filename: ").strip()
@@ -51,7 +67,7 @@ class FileManager:
             return
 
         print("Enter new content:")
-        content = input("> ")
+        content = self.multiline_input()
 
         with open(filepath, "w") as file:
             file.write(content)
@@ -106,6 +122,56 @@ class FileManager:
             print(f"{index}. {file}")
         print("-----------------")
 
+    def copy_file(self):
+        source = input("Enter file to copy: ").strip()
+        source_path = self.get_path(source)
+
+        if not os.path.exists(source_path):
+            print("❌ Source file not found.")
+            return
+
+        destination = input(
+            "Enter new file name for copy: "
+        ).strip()
+
+        destination_path = self.get_path(destination)
+
+        shutil.copy(source_path, destination_path)
+
+        print("✅ File copied successfully.")
+
+    def move_file(self):
+        filename = input(
+            "Enter filename to move: "
+        ).strip()
+
+        source_path = self.get_path(filename)
+
+        if not os.path.exists(source_path):
+            print("❌ File not found.")
+            return
+
+        destination_folder = input(
+            "Enter destination folder: "
+        ).strip()
+
+        if not os.path.exists(destination_folder):
+            os.makedirs(destination_folder)
+
+        destination_path = os.path.join(
+            destination_folder,
+            filename
+        )
+
+        shutil.move(
+            source_path,
+            destination_path
+        )
+
+        print(
+            f"✅ File moved to '{destination_folder}'"
+        )
+
     def search_file(self):
         filename = input("Enter filename to search: ").strip()
         filepath = self.get_path(filename)
@@ -159,7 +225,9 @@ class FileManager:
             print("7. Search File")
             print("8. File Information")
             print("9. Word Count")
-            print("10. Exit")
+            print("10. Copy File")
+            print("11. Move File")
+            print("12. Exit")
 
             choice = input("\nChoose an option: ").strip()
 
@@ -191,6 +259,12 @@ class FileManager:
                 self.word_count()
 
             elif choice == "10":
+                self.copy_file()
+
+            elif choice == "11":
+                self.move_file()
+
+            elif choice == "12":
                 print("👋 Exiting File Manager...")
                 break
 
